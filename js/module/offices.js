@@ -10,3 +10,13 @@ export const getAllEmployeesSanFracisco = async()=>{
         WHERE city='San Francisco'`)
     return result;
 }
+
+//**Contar la cantidad de oficinas en cada país:**
+
+export const countOfficesByCountry = async()=>{
+    let [result] = await connection.query(`
+        SELECT country, COUNT(*) 
+        FROM offices 
+        GROUP BY country`)
+    return result;
+}

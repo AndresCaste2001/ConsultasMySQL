@@ -23,3 +23,44 @@ export const getAllPaymentsByClient = async()=>{
     USING (customerNumber) GROUP BY customerNumber`)
     return result;
 }
+
+//Obtener el promedio del límite de crédito de todos los clientes:
+
+export const getAverageCreditLimit = async()=>{
+    let [result] = await connection.query(`
+    SELECT AVG(creditLimit) FROM customers`)
+    return result;
+}
+
+//**Obtener el promedio del límite de crédito de los clientes por país:**
+
+export const getAverageCreditLimitByCountry = async()=>{
+    let [result] = await connection.query(`
+    SELECT country, AVG(creditLimit) 
+    FROM customers 
+    GROUP BY country`)
+    return result;
+}
+
+//**Calcular el total de órdenes realizadas por cada cliente:**
+
+export const getTotalOrdersByClient = async()=>{
+    let [result] = await connection.query(`
+    SELECT customerName, COUNT(*) FROM customers  
+    INNER JOIN orders AS o USING (customerNumber) 
+    WHERE o.status = 'Shipped' 
+    GROUP BY customerName`)
+    return result;
+}
+
+//**Encontrar la cantidad total de productos pedidos por cada cliente:**
+
+export const getTotalProductsOrderedByClient = async()=>{
+    let [result] = await connection.query(`
+    SELECT customerName, SUM(p.quantityOrdered) FROM customers 
+    INNER JOIN orders AS o USING (customerNumber) 
+    INNER JOIN orderdetails AS p USING (orderNumber) 
+    WHERE o.status = 'Shipped' 
+    GROUP BY customerName;`)
+    return result;
+}

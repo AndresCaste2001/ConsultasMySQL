@@ -20,3 +20,4 @@ export const getAllOrdersByFrance = async()=>{
     WHERE country = 'France'`)
     return result;
 }
+
