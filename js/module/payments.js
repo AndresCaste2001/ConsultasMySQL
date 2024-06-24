@@ -26,6 +26,26 @@ export const getTotalPaymentsByClient = async()=>{
         SELECT customerName, COUNT(*) 
         FROM customers 
         INNER JOIN payments USING (customerNumber) 
-        GROUP BY customerName;`)
+        GROUP BY customerName`)
+    return result;
+}
+
+//**Calcular el total de pagos recibidos por cada país:**
+
+export const getTotalPaymentsByCountry = async()=>{
+    let [result] = await connection.query(`
+        SELECT country, SUM(p.amount) FROM customers 
+        INNER JOIN payments AS p USING (customerNumber) 
+        GROUP BY country`)
+    return result;
+}
+
+//**Obtener el total de pagos realizados en cada año:**
+
+export const getTotalPaymentsByYear = async()=>{
+    let [result] = await connection.query(`
+        SELECT YEAR(paymentDate) AS sales_year, SUM(amount) 
+        FROM payments 
+        GROUP BY YEAR(paymentDate)`)
     return result;
 }

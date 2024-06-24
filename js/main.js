@@ -5,7 +5,8 @@ import {
     getTotalProductsInStock,
     getAverageBuyPrice,
     getTotalBuyPrice,
-    getAverageMSRP
+    getAverageMSRP,
+    getAverageQuantityInStockByProductLine
 
     } from "./module/products.js";
 
@@ -13,7 +14,8 @@ import {
 
 import { 
     getAllEmployeesSanFracisco,
-    countOfficesByCountry
+    countOfficesByCountry,
+    totalSalesByOffice
 
     } from "./module/offices.js";
 
@@ -25,7 +27,10 @@ import {
     getAverageCreditLimit,
     getAverageCreditLimitByCountry,
     getTotalOrdersByClient,
-    getTotalProductsOrderedByClient
+    getTotalProductsOrderedByClient,
+    getTotalSalesByClient,
+    getAverageProductsOrderedByClient,
+    getAverageProductsOrderedByClient2
 
     } from "./module/customers.js";
 
@@ -33,7 +38,8 @@ import {
 
 import { 
     getAllShippedOrders,
-    getAllOrdersByFrance
+    getAllOrdersByFrance,
+    getTotalSalesByCountry
 
     } from "./module/orders.js";
 
@@ -42,13 +48,18 @@ import {
 import { 
     getAllClientsCreditOver500,
     getTotalPayments,
-    getTotalPaymentsByClient
+    getTotalPaymentsByClient,
+    getTotalPaymentsByCountry,
+    getTotalPaymentsByYear
      } from "./module/payments.js";
 
 //---------------------------PRODUCTSLINE--------------------------------
 
 import { 
-    getAllProuductsLineDescription 
+    getAllProuductsLineDescription,
+    getAllProductsLineSold,
+    getAllProductsLineAvgBuyPrice,
+    getAllProductsLineAvgSellPrice
 
     } from "./module/productlines.js";
 
@@ -58,6 +69,10 @@ import {
     getAllEmployeesReportTo1143,
     getAllEmployeesCount,
     getAllEmployeesCountByTitle,
+    getAllEmployeesAvgSalesByEmployee,
+    getAllOrdersByEmployee,
+    getAllProductsSoldByEmployee,
+    getAllCreditLimitByEmployee
     
 
     } from "./module/employees.js";
@@ -70,4 +85,4 @@ import {
     } from "./module/orderdetails.js";
 
 
-console.log(await getAllEmployeesCountByTitle());
+console.log(await getAllEmployeesAvgSalesByEmployee());

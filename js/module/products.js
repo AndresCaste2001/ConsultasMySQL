@@ -41,3 +41,13 @@ export const getAverageMSRP = async()=>{
         SELECT AVG(MSRP) FROM products;`)
     return result;
 }
+
+//**Obtener el promedio de la cantidad de productos en stock por línea de productos:**
+
+export const getAverageQuantityInStockByProductLine = async()=>{
+    let [result] = await connection.query(`
+        SELECT productLine, AVG(p.quantityInStock) FROM productlines 
+        INNER JOIN products AS p USING (productLine) 
+        GROUP BY productLine`)
+    return result;
+}

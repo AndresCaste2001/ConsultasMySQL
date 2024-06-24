@@ -64,3 +64,43 @@ export const getTotalProductsOrderedByClient = async()=>{
     GROUP BY customerName;`)
     return result;
 }
+
+//**Calcular el total de ventas (cantidad ordenada por precio cada uno) por cada cliente:**
+
+export const getTotalSalesByClient = async()=>{
+    let [result] = await connection.query(`
+    SELECT customerName, SUM(p.quantityOrdered*pr.buyPrice) AS sale FROM customers 
+    INNER JOIN orders AS o USING (customerNumber) 
+    INNER JOIN orderdetails AS p USING (orderNumber) 
+    INNER JOIN products AS pr USING (productCode) 
+    WHERE o.status = 'Shipped' 
+    GROUP BY customerName 
+    ORDER BY sale DESC`)
+    return result;
+}
+
+//**Encontrar el promedio de la cantidad de productos ordenados por cada cliente:**
+
+export const getAverageProductsOrderedByClient = async()=>{
+    let [result] = await connection.query(`
+    SELECT CONCAT(customerNumber," ", customerName) AS idCustomer, AVG(od.quantityOrdered) 
+    FROM customers 
+    INNER JOIN orders AS o USING (customerNumber) 
+    INNER JOIN orderdetails AS od USING (orderNumber) 
+    WHERE o.status = 'Shipped' 
+    GROUP BY idCustomer`)
+    return result;
+}
+
+//**Calcular la cantidad media de productos pedidos por cada cliente:**
+
+export const getAverageProductsOrderedByClient2 = async()=>{
+    let [result] = await connection.query(`
+    SELECT customerNumber, customerName, AVG(od.quantityOrdered) 
+    FROM customers 
+    INNER JOIN orders AS o USING (customerNumber) 
+    INNER JOIN orderdetails AS od USING (orderNumber) 
+    WHERE o.status = 'Shipped' 
+    GROUP BY customerNumber`)
+    return result;
+}

@@ -21,3 +21,13 @@ export const getAllOrdersByFrance = async()=>{
     return result;
 }
 
+//**Calcular el total de ventas realizadas en cada país:**
+
+export const getTotalSalesByCountry = async()=>{
+    let [result] = await connection.query(`
+    SELECT country, COUNT(*) FROM customers 
+    INNER JOIN orders o USING (customerNumber) 
+    WHERE o.status = 'Shipped' 
+    GROUP BY country`)
+    return result;
+}

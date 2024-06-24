@@ -20,3 +20,16 @@ export const countOfficesByCountry = async()=>{
         GROUP BY country`)
     return result;
 }
+
+//**Encontrar el total de ventas realizadas por cada oficina:**
+
+export const totalSalesByOffice = async()=>{
+    let [result] = await connection.query(`
+        SELECT officeCode, off.city, COUNT(*) FROM offices AS off 
+        INNER JOIN employees AS e USING (officeCode) 
+        INNER JOIN customers AS c ON e.employeeNumber = c.salesRepEmployeeNumber 
+        INNER JOIN orders AS o USING (customerNumber) 
+        WHERE o.status = 'Shipped'  
+        GROUP BY officeCode`)
+    return result;
+}
